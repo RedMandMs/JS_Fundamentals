@@ -1,0 +1,19 @@
+{
+  "name": "js-fundamentals",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "prestart": "npm install"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "lodash": "^4.17.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.0.0",
+    "gulp-webserver": "^0.9.1"
+  }
+}
