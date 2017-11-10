@@ -312,7 +312,7 @@ console.log("Task 12");
         firstDayOfMonth: firstDayOfMonth,
         lastDayOfMonth: lastDayOfMonth
     };
-    for(prop in dates){
+    for (prop in dates) {
         console.log(`${prop} : ${dates[prop].toString()}`);
     }
 }
@@ -324,8 +324,8 @@ console.log("Task 13");
 {
     let start = new Date;
     let sum = 0;
-    for(let i = 1; i <= 10000000; i++){
-        sum+=i;
+    for (let i = 1; i <= 10000000; i++) {
+        sum += i;
     }
     let finish = new Date();
     console.log(`${(finish.valueOf() - start.valueOf())} miliseconds`);
@@ -338,7 +338,7 @@ console.log("Task 14");
 {
     let today = new Date();
     let newYear = new Date(today.getFullYear() + 1, 0, 1);
-    console.log(`До нового года: ${Math.round((newYear.valueOf() - today.valueOf())/(1000*60*60*24))} дня(ей)`)
+    console.log(`До нового года: ${Math.round((newYear.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24))} дня(ей)`);
 }
 
 
