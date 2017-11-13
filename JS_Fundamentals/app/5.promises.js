@@ -207,13 +207,13 @@ console.log("Task 11");
 
 console.log("Task 12");
 {
-    const promise1 = new Promise((resolve, reject) => setTimeout(() => resolve('Promise Data'), 5000));
-    const promise2 = new Promise((resolve, reject) => {
-        document.getElementById('btn-reject-promise')
-            .addEventListener("click", () => reject('Falure'));
-    });
+    // const promise1 = new Promise((resolve, reject) => setTimeout(() => resolve('Promise Data'), 5000));
+    // const promise2 = new Promise((resolve, reject) => {
+    //     document.getElementById('btn-reject-promise')
+    //         .addEventListener("click", () => reject('Falure'));
+    // });
 
-    Promise.race([promise1, promise2])
-        .then(value => log(value))
-        .catch(er => log(er));
+    // Promise.race([promise1, promise2])
+    //     .then(value => log(value))
+    //     .catch(er => log(er));
 }
