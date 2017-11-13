@@ -22,7 +22,7 @@ console.log("Task 01");
 
 console.log("Task 02");
 {
-    Promise.resolve('Promise Data').then(value => log(value));
+    // Promise.resolve('Promise Data').then(value => log(value));
 }
 
 // Task 03
@@ -32,8 +32,8 @@ console.log("Task 02");
 
 console.log("Task 03");
 {
-    new Promise((resolve, reject) => reject('Promise Error'))
-        .catch(error => log(error));
+    // new Promise((resolve, reject) => reject('Promise Error'))
+    //     .catch(error => log(error));
 }
 
 // Task 04
@@ -44,7 +44,7 @@ console.log("Task 03");
 
 console.log("Task 04");
 {
-    new Promise((resolve, reject) => setTimeout(() => resolve('Promise Data 4'), 3000)).then(data => log(data));
+    // new Promise((resolve, reject) => setTimeout(() => resolve('Promise Data 4'), 3000)).then(data => log(data));
 }
 
 // Task 05
@@ -85,24 +85,24 @@ console.log("Task 05");
 
 console.log("Task 06");
 {
-    let handlePromise = {
-        promise: null,
-        resolve: () => log('has not resolve'),
-        reject: () => log('has not reject'),
-        onSuccess: data => log(`Promise is resolved with data: ${data}`),
-        onError: error => log(`Promise is rejected with error: ${error}`)
-    };
-    document.getElementById('btn-resolve-promise').addEventListener("click", () => handlePromise.resolve('Success'));
-    document.getElementById('btn-reject-promise').addEventListener("click", () => handlePromise.reject('Falure'));
-    document.getElementById('btn-create-promise').addEventListener("click", () => {
-        let promise = new Promise((resolve, reject) => {
-            handlePromise.promise = this;
-            handlePromise.resolve = resolve;
-            handlePromise.reject = reject;
-        }).then(data => handlePromise.onSuccess(data))
-        .then(data => handlePromise.onSuccess(data))
-        .catch(error => handlePromise.onError(error));
-    });
+    // let handlePromise = {
+    //     promise: null,
+    //     resolve: () => log('has not resolve'),
+    //     reject: () => log('has not reject'),
+    //     onSuccess: data => log(`Promise is resolved with data: ${data}`),
+    //     onError: error => log(`Promise is rejected with error: ${error}`)
+    // };
+    // document.getElementById('btn-resolve-promise').addEventListener("click", () => handlePromise.resolve('Success'));
+    // document.getElementById('btn-reject-promise').addEventListener("click", () => handlePromise.reject('Falure'));
+    // document.getElementById('btn-create-promise').addEventListener("click", () => {
+    //     let promise = new Promise((resolve, reject) => {
+    //         handlePromise.promise = this;
+    //         handlePromise.resolve = resolve;
+    //         handlePromise.reject = reject;
+    //     }).then(data => handlePromise.onSuccess(data))
+    //         .then(data => handlePromise.onSuccess(data))
+    //         .catch(error => handlePromise.onError(error));
+    // });
 }
 
 // Task 07
@@ -114,7 +114,16 @@ console.log("Task 06");
 
 console.log("Task 07");
 {
-
+    // let promise = new Promise((resolve, reject) =>
+    //     setTimeout(() => resolve("My name is "), 1000)
+    // )
+    // let onSuccess = function (value) {
+    //     return value + 'Sergey';
+    // }
+    // let print = function (value) {
+    //     log(value);
+    // }
+    // promise.then(val => onSuccess(val)).then(val => print(val));
 }
 
 // Task 08
@@ -124,7 +133,23 @@ console.log("Task 07");
 
 console.log("Task 08");
 {
-
+    // let promise = new Promise((resolve, reject) =>
+    //     setTimeout(() => resolve("My name is "), 1000)
+    // )
+    // let onSuccess = function (value) {
+    //     if (Math.random() > 0.5) {
+    //         return value + 'Sergey';
+    //     } else {
+    //         throw new Error("Что-то пошло не так");
+    //     }
+    // }
+    // let print = function (value) {
+    //     log(value);
+    // }
+    // promise
+    //     .then(val => onSuccess(val))
+    //     .then(val => print(val))
+    //     .catch(reason => print(reason.message));
 }
 
 // Task 09
@@ -135,7 +160,13 @@ console.log("Task 08");
 
 console.log("Task 09");
 {
-
+    // let getPromiseData = function (promise) {
+    //     promise.then(value => log(value.name));
+    // };
+    // const wrap = {
+    //     name: 'Anna'
+    // }
+    // getPromiseData(Promise.resolve(wrap));
 }
 
 // Task 10
@@ -146,7 +177,10 @@ console.log("Task 09");
 
 console.log("Task 10");
 {
+    // const promise1 = new Promise((resolve, reject) => setTimeout(() => resolve({ name: 'Anna' }), 2000));
+    // const promise2 = new Promise((resolve, reject) => setTimeout(() => resolve({ age: 16 }), 3000));
 
+    // Promise.all([promise1, promise2]).then(value => log(Object.assign({}, ...value)));
 }
 
 // Task 11
@@ -156,7 +190,12 @@ console.log("Task 10");
 
 console.log("Task 11");
 {
+    // const promise1 = new Promise((resolve, reject) => setTimeout(() => resolve({ name: 'Anna' }), 2000));
+    // const promise2 = new Promise((resolve, reject) => setTimeout(() => reject("Promise Error"), 3000));
 
+    // Promise.all([promise1, promise2])
+    //     .then(value => log(Object.assign({}, ...value)))
+    //     .catch(er => log(er));
 }
 
 // Task 12
@@ -168,5 +207,13 @@ console.log("Task 11");
 
 console.log("Task 12");
 {
+    const promise1 = new Promise((resolve, reject) => setTimeout(() => resolve('Promise Data'), 5000));
+    const promise2 = new Promise((resolve, reject) => {
+        document.getElementById('btn-reject-promise')
+            .addEventListener("click", () => reject('Falure'));
+    });
 
+    Promise.race([promise1, promise2])
+        .then(value => log(value))
+        .catch(er => log(er));
 }
