@@ -1,84 +1,12 @@
+import { Category } from './enums';
+import { Book, Logger, Author, Librarian, Magazine } from './interfaces';
+import { UniversityLibrarian, ReferenceItem } from './classes'
+import RefBook from './encyclopedia'
+import { purge } from './lib/utility-functions'
+import Shelf from './shelf';
+
+
 showHello("greeting", "Sergey");
-
-interface Book {
-    id: number;
-    title: string;
-    author: string;
-    available: boolean;
-    category: Category;
-    pages?: number;
-    markDamaged?: DamageLogger;
-}
-
-interface DamageLogger {
-    (reason: string): void;
-}
-
-interface Person {
-    name: string;
-    email: string;
-}
-
-interface Author extends Person {
-    numBooksPublished: number;
-}
-
-interface Librarian extends Person {
-    department: string;
-    assistCustomer: (custName: string) => void;
-}
-
-class UniversityLibrarian implements Librarian {
-    name: string;
-    email: string;
-    department: string;
-    assistCustomer(custName: string): void {
-        console.log(`${this.name} is assisting ${custName}`)
-    };
-}
-
-abstract class ReferenceItem {
-    // title: string;
-    // year: number;
-    // constructor(newTitle: string, newYear: number){
-    //     console.log('Creating a new ReferenceItem...');
-    //     this.title = newTitle;
-    //     this.year = newYear;
-    // };
-    private _publisher: string;
-    static department: string = "Spb";
-    constructor(public title: string, protected year: number) {
-        console.log('Creating a new ReferenceItem...');
-    };
-
-    printItem(): void{
-        console.log(`${this.title} was pablished in ${this.year}`);
-        console.log(`Department: ${ReferenceItem.department}`);
-    };
-
-    get publisher(): string {
-        return this._publisher.toUpperCase();
-    }
-    
-    set publisher(newPublisher: string) {
-        this._publisher = newPublisher;
-    }
-
-    abstract printCitation(): void;
-}
-
-class Encyclopedia extends ReferenceItem{
-    constructor(title: string, year: number, public edition: number){
-        super(title, year);
-    }
-    printItem(): void{
-        super.printItem();
-        console.log(`Edition: ${this.edition} (${this.year})`);
-    }
-    printCitation(): void{
-        console.log(`${this.title} - ${this.year}`)
-    }
-}
 
 function getAllBooks(): Array<Book> {
     let books: Array<Book> = [
@@ -98,14 +26,6 @@ function logFirstAvailable(books: Array<Book> = getAllBooks()): void {
             break;
         }
     }
-}
-
-enum Category {
-    JavaScript,
-    CSS,
-    HTML,
-    TypeScript,
-    Angular2
 }
 
 function getBookTitlesByCategory(category: Category = Category.JavaScript): Array<string> {
@@ -226,7 +146,7 @@ function showHello(divName: string, name: string) {
 // printBook(myBook);
 // myBook.markDamaged('missing back cover');
 
-// let logDamage: DamageLogger;
+// let logDamage: Logger;
 // logDamage = (damage: string) => console.log('Damage log: ' + damage);
 // logDamage('lost');
 
@@ -251,9 +171,52 @@ function showHello(divName: string, name: string) {
 // ref.publisher = "atc";
 // console.log(ref.publisher);
 
-let refBook: ReferenceItem = new Encyclopedia("Cool encyclopedia", 2017, 2);
-refBook.printItem();
-refBook.printCitation();
+// let refBook: ReferenceItem = new RefBook("Cool encyclopedia", 2017, 2);
+// refBook.printItem();
+// refBook.printCitation();
+
+// let inventory =
+//     [
+//         { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+//         { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+//         { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+//         { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+//     ];
+
+// console.log(purge(inventory));
+
+// let numbers = [1, 2, 3, 4, 5];
+// console.log(purge(numbers));
+
+// let bookShelf: Shelf<Book> = new Shelf<Book>();
+// inventory.forEach(book => bookShelf.add(book));
+// let firstBook: Book = bookShelf.getFirst();
+// console.log(firstBook.title);
+
+// let magazines : Array<Magazine> =
+// [
+//     { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//     { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//     { title: 'Five Points', publisher: 'GSU' }
+// ];
+// let magazineShelf : Shelf<Magazine> = new Shelf<Magazine>();
+// magazines.forEach(magazine => magazineShelf.add(magazine));
+//console.log(magazineShelf.getFirst().title);
+
+// console.log(bookShelf.find('Code Complete').title);
+// magazineShelf.printTitles();
+
+let lib1 = new UniversityLibrarian();
+
+try {
+    lib1.assistFaculty = () => console.log('assistFaculty replacement method');
+    lib1.teachCommunity = () => console.log('teachCommunity replacement method');    
+} catch (error) {
+    console.log(error.message);
+}
+
+lib1.assistFaculty();
+lib1.teachCommunity();
 
 
 
