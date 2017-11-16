@@ -1,31 +1,83 @@
 showHello("greeting", "Sergey");
 
-interface Book{
+interface Book {
     id: number;
     title: string;
     author: string;
     available: boolean;
     category: Category;
     pages?: number;
-    markDamaged? : DamageLogger;
+    markDamaged?: DamageLogger;
 }
 
-interface DamageLogger{
+interface DamageLogger {
     (reason: string): void;
 }
 
-interface Person{
+interface Person {
     name: string;
     email: string;
 }
 
-interface Author extends Person{
+interface Author extends Person {
     numBooksPublished: number;
 }
 
-interface Librarian extends Person{
+interface Librarian extends Person {
     department: string;
     assistCustomer: (custName: string) => void;
+}
+
+class UniversityLibrarian implements Librarian {
+    name: string;
+    email: string;
+    department: string;
+    assistCustomer(custName: string): void {
+        console.log(`${this.name} is assisting ${custName}`)
+    };
+}
+
+abstract class ReferenceItem {
+    // title: string;
+    // year: number;
+    // constructor(newTitle: string, newYear: number){
+    //     console.log('Creating a new ReferenceItem...');
+    //     this.title = newTitle;
+    //     this.year = newYear;
+    // };
+    private _publisher: string;
+    static department: string = "Spb";
+    constructor(public title: string, protected year: number) {
+        console.log('Creating a new ReferenceItem...');
+    };
+
+    printItem(): void{
+        console.log(`${this.title} was pablished in ${this.year}`);
+        console.log(`Department: ${ReferenceItem.department}`);
+    };
+
+    get publisher(): string {
+        return this._publisher.toUpperCase();
+    }
+    
+    set publisher(newPublisher: string) {
+        this._publisher = newPublisher;
+    }
+
+    abstract printCitation(): void;
+}
+
+class Encyclopedia extends ReferenceItem{
+    constructor(title: string, year: number, public edition: number){
+        super(title, year);
+    }
+    printItem(): void{
+        super.printItem();
+        console.log(`Edition: ${this.edition} (${this.year})`);
+    }
+    printCitation(): void{
+        console.log(`${this.title} - ${this.year}`)
+    }
 }
 
 function getAllBooks(): Array<Book> {
@@ -99,18 +151,18 @@ function сheckoutBooks(customer: string, ...bookIDs: number[]): string[] {
         .map(id => getBookByID(id).title);
 }
 
-function getTitles(available : boolean) : string[];
-function getTitles(author : string) : string[];
-function getTitles(property : any) : string[]{
-    const resultBooksTitles : string[] = [];
-    if(typeof property === 'string'){
+function getTitles(available: boolean): string[];
+function getTitles(author: string): string[];
+function getTitles(property: any): string[] {
+    const resultBooksTitles: string[] = [];
+    if (typeof property === 'string') {
         for (let book of getAllBooks()) {
             if (book.author == property) {
                 resultBooksTitles.push(book.title);
             }
         }
     }
-    if(typeof property === 'boolean'){
+    if (typeof property === 'boolean') {
         for (let book of getAllBooks()) {
             if (book.available == property) {
                 resultBooksTitles.push(book.title);
@@ -120,7 +172,7 @@ function getTitles(property : any) : string[]{
     return resultBooksTitles;
 }
 
-function printBook(book : Book){
+function printBook(book: Book) {
     console.log(`${book.title} by ${book.author}`);
 }
 
@@ -178,22 +230,30 @@ function showHello(divName: string, name: string) {
 // logDamage = (damage: string) => console.log('Damage log: ' + damage);
 // logDamage('lost');
 
-let favoriteAuthor: Author = {
-    name: "Chack Palanik",
-    email: "chack_palanik@fightclub.com",
-    numBooksPublished : 15
-}
+// let favoriteAuthor: Author = {
+//     name: "Chack Palanik",
+//     email: "chack_palanik@fightclub.com",
+//     numBooksPublished: 15
+// }
 
-let favoriteLibrarian: Librarian = {
-    name: "Chack Palanik",
-    email: "chack_palanik@fightclub.com",
-    department: 'spb',
-    assistCustomer: (custName: string) => console.log("Я селяль!")
-}
+// let favoriteLibrarian: Librarian = {
+//     name: "Luk sky Wolker",
+//     email: "luk_sky_wolker@starwars.com",
+//     department: 'spb',
+//     assistCustomer: (custName: string) => console.log("Я сделяль!")
+// }
+// let favoriteLibrarian: Librarian = new UniversityLibrarian();
+// favoriteLibrarian.name = "Luk";
+// favoriteLibrarian.assistCustomer('Dart Weyder');
 
+// let ref : ReferenceItem = new ReferenceItem("Fight club", 1996);
+// ref.printItem();
+// ref.publisher = "atc";
+// console.log(ref.publisher);
 
-
-
+let refBook: ReferenceItem = new Encyclopedia("Cool encyclopedia", 2017, 2);
+refBook.printItem();
+refBook.printCitation();
 
 
 
