@@ -2,106 +2,17 @@ import { Category } from './enums';
 import { Book, Logger, Author, Librarian, Magazine } from './interfaces';
 import { UniversityLibrarian, ReferenceItem } from './classes'
 import RefBook from './encyclopedia'
-import { purge } from './lib/utility-functions'
+import {
+    purge, getAllBooks, getBookTitlesByCategory, logFirstAvailable,
+    logBookTitles, getBookByID, createCustomerID, createCustomer, сheckoutBooks,
+    getTitles, showHello, printBook, getBooksByCategory, logCategorySearch, getBooksByCategoryPromise,
+    logSearchResults
+} from './lib/utility-functions'
 import Shelf from './shelf';
+import "babel-polyfill";
 
 
 showHello("greeting", "Sergey");
-
-function getAllBooks(): Array<Book> {
-    let books: Array<Book> = [
-        { id: 1, title: 'Refactoring JavaScript', author: 'Evan Burchard', available: true, category: Category.JavaScript },
-        { id: 2, title: 'JavaScript Testing', author: 'Liang Yuxian Eugene', available: false, category: Category.JavaScript },
-        { id: 3, title: 'CSS Secrets', author: 'Lea Verou', available: true, category: Category.CSS },
-        { id: 4, title: 'Mastering JavaScript Object-Oriented Programming', author: 'Andrea Chiarelli', available: true, category: Category.JavaScript }
-    ];
-    return books;
-}
-
-function logFirstAvailable(books: Array<Book> = getAllBooks()): void {
-    console.log(`Всего книг: ${books.length}`);
-    for (let book of books) {
-        if (book.available) {
-            console.log(`Первая доступная книга: ${book.title}`);
-            break;
-        }
-    }
-}
-
-function getBookTitlesByCategory(category: Category = Category.JavaScript): Array<string> {
-    const books = getAllBooks();
-    const filtredTitles: string[] = [];
-    for (let book of books) {
-        if (book.category == category) {
-            filtredTitles.push(book.title);
-        }
-    }
-    return filtredTitles;
-}
-
-function logBookTitles(titles: string[]): void {
-    titles.forEach(title => console.log(title));
-}
-
-function getBookByID(id: number): Book | undefined {
-    return getAllBooks().find(book => book.id === id);
-}
-
-function createCustomerID(name: string, id: number): string {
-    return name + id;
-}
-
-function createCustomer(name: string, age?: number, city?: string): void {
-    console.log(`Creating customer ${name}`);
-
-    if (age) {
-        console.log(`Age: ${age}`);
-    }
-
-    if (city) {
-        console.log(`City: ${city}`);
-    }
-
-}
-
-function сheckoutBooks(customer: string, ...bookIDs: number[]): string[] {
-    console.log(customer);
-    return bookIDs.filter(id =>
-        getBookByID(id).available)
-        .map(id => getBookByID(id).title);
-}
-
-function getTitles(available: boolean): string[];
-function getTitles(author: string): string[];
-function getTitles(property: any): string[] {
-    const resultBooksTitles: string[] = [];
-    if (typeof property === 'string') {
-        for (let book of getAllBooks()) {
-            if (book.author == property) {
-                resultBooksTitles.push(book.title);
-            }
-        }
-    }
-    if (typeof property === 'boolean') {
-        for (let book of getAllBooks()) {
-            if (book.available == property) {
-                resultBooksTitles.push(book.title);
-            }
-        }
-    }
-    return resultBooksTitles;
-}
-
-function printBook(book: Book) {
-    console.log(`${book.title} by ${book.author}`);
-}
-
-//---------------------------------------------------
-
-function showHello(divName: string, name: string) {
-    const elt = document.getElementById(divName);
-    elt.innerText = `Hello from ${name}`;
-}
 
 // console.log(getAllBooks());
 
@@ -206,17 +117,50 @@ function showHello(divName: string, name: string) {
 // console.log(bookShelf.find('Code Complete').title);
 // magazineShelf.printTitles();
 
-let lib1 = new UniversityLibrarian();
+// let lib1 = new UniversityLibrarian();
 
-try {
-    lib1.assistFaculty = () => console.log('assistFaculty replacement method');
-    lib1.teachCommunity = () => console.log('teachCommunity replacement method');    
-} catch (error) {
-    console.log(error.message);
-}
+// try {
+//     lib1.assistFaculty = () => console.log('assistFaculty replacement method');
+//     lib1.teachCommunity = () => console.log('teachCommunity replacement method');
+// } catch (error) {
+//     console.log(error.message);
+// }
 
-lib1.assistFaculty();
-lib1.teachCommunity();
+// lib1.assistFaculty();
+// lib1.teachCommunity();
+
+// Callback functions
+// console.log('Beginning search...');
+// getBooksByCategory(Category.JavaScript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+// console.log('Search submitted...');
+
+// console.log('Beginning search...');
+// getBooksByCategoryPromise(Category.JavaScript)
+//     .then(titles => {
+//         console.log(`Found titles: ${titles}`);
+//         return titles.length;
+//     }, reason => { return 0; })
+//     .then(numOfBooks => console.log(`Number of books found: ${numOfBooks}`))
+//     .catch(reason => console.log(`Error: ${reason}`));
+// console.log('Search submitted...');
+
+// console.log('Beginning search...');
+// getBooksByCategoryPromise(Category.Software)
+//     .then(titles => {
+//         console.log(`Found titles: ${titles}`);
+//         return titles.length;
+//     }, reason => { return 0; })
+//     .then(numOfBooks => console.log(`Number of books found: ${numOfBooks}`))
+//     .catch(reason => console.log(`Error: ${reason}`));
+// console.log('Search submitted...');
+
+console.log('Beginning search...');
+logSearchResults(Category.Software)
+    .catch(reason => console.log(reason));
+console.log('Search submitted...');
+
+
 
 
 
